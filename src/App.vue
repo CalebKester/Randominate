@@ -1,22 +1,41 @@
-<template>
-  <div id="app" class="bg-blue-darkest min-h-screen font-sans text-white">
-    <header class="p-8 text-center md:text-left">
-      <img src="/static/img/logo.svg" alt="Randominate" width="250" />
-    </header>
-    <main>
-      <router-view></router-view>
-    </main>
-  </div>
+<template lang="pug">
+  #app(   
+    class="min-h-screen p-4 md:p-8 bg-blue-darkest font-sans text-grey tracking-wide uppercase"
+  )
+    header(class="text-center md:text-left")
+      img(
+        src="/static/img/logo.svg"
+        alt="Randominate" 
+        width="250"
+      )
+    main
+      hero-chooser
+      .flex.flex-wrap.justify-center.mt-8
+        attribute-filter(
+          v-for="filter in filters"
+          :key="filter.property"
+          :filter="filter" 
+          class="md:w-auto p-8"
+        )
 </template>
 
 <script>
 import axios from "axios";
-import { mapMutations } from "vuex";
+import { mapState, mapMutations, mapGetters } from "vuex";
+import HeroChooser from "./components/HeroChooser";
+import AttributeFilter from "./components/AttributeFilter";
 
 export default {
-  name: "app",
+  components: {
+    AttributeFilter,
+    HeroChooser
+  },
   mounted() {
     this.init();
+  },
+  computed: {
+    ...mapState(["filters"]),
+    ...mapGetters(["filteredHeroes"])
   },
   methods: {
     ...mapMutations(["setHeroes"]),

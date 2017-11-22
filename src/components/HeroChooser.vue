@@ -1,34 +1,46 @@
-<template>
-  <div>
-    <div :class="$style.container">
-      <div :class="$style.wrap" :style="carousel">
-        <div 
+<template lang="pug">
+  .mt-8
+    div(:class="$style.container")
+      div(:class="$style.wrap" :style="carousel")
+        div(
           v-for="(hero, index) in list" 
           :key="hero.id"
           :class="$style.hero"
           :style="getTransform(index)"
-          >
-          <img
+        ) 
+          img(
             :src="`/static/img/assets/${hero.name}.png`" 
-          />
-            <!-- :alt="hero.localized_name"  
-            width="256"
-            height="144" -->
-        </div>
-      </div>
-    </div>
-    <div class="text-center">
-      <button class="bg-green p-4" @click="addHero(-1)">-</button>
-      <button class="bg-red p-4" @click="rotate(5)">Spin to win</button>
-      <button class="bg-green p-4" @click="addHero(1)">+</button>
-    </div>
-  </div>
+            xwidth="256"
+            xheight="144"
+          )
+    .text-center.mt-8
+      x-button(
+        @click="addHero(-1)"
+      ) -
+      x-button(
+        @click="rotate()"
+        :class="$style.button"
+      ) Spin
+      x-button(
+        @click="addHero(1)"
+      ) +
 </template>
 
 <script>
 import { mapState } from "vuex";
+import XButton from "./X-Button";
 
 export default {
+  components: {
+    XButton
+  },
+  // props: {
+  //   list: {
+  //     type: Array,
+  //     required: true,
+  //     default: () => []
+  //   }
+  // },
   data() {
     return {
       width: 208,
@@ -114,5 +126,9 @@ export default {
     width: 186px;
     height: 116px;
   }
+}
+
+.button {
+  width: 256px;
 }
 </style>
