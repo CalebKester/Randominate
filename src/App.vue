@@ -1,7 +1,7 @@
 <template>
-  <div id="app" class="bg-indigo-darkest h-screen font-sans text-white">
-    <header :class="$style.logo" class="pt-8 text-center tracking-tight">
-      Randominate
+  <div id="app" class="bg-blue-darkest min-h-screen font-sans text-white">
+    <header class="p-8 text-center md:text-left">
+      <img src="/static/img/logo.svg" alt="Randominate" width="250" />
     </header>
     <main>
       <router-view></router-view>
@@ -10,8 +10,27 @@
 </template>
 
 <script>
+import axios from "axios";
+import { mapMutations } from "vuex";
+
 export default {
-  name: "app"
+  name: "app",
+  mounted() {
+    this.init();
+  },
+  methods: {
+    ...mapMutations(["setHeroes"]),
+    init() {
+      // console.log("here");
+      const API_HEROES = "https://api.opendota.com/api/heroes";
+      axios.get(API_HEROES).then(res => {
+        this.setHeroes(res.data);
+      });
+      // .catch(e => {
+      // console.warn(e);
+      // });
+    }
+  }
 };
 </script>
 
@@ -19,8 +38,6 @@ export default {
 @import "./css/main.scss";
 </style>
 
-<style module>
-.logo {
-  font-size: 16vw;
-}
+<style>
+
 </style>

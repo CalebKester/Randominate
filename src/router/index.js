@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Lifting from "@/components/Lifting";
+import HeroChooser from "@/components/HeroChooser";
 
 Vue.use(Router);
 
@@ -8,8 +8,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "Lifting",
-      component: Lifting
+      name: "HeroChooser",
+      component: HeroChooser
     }
   ]
 });

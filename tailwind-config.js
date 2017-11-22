@@ -96,7 +96,7 @@ var colors = {
   'teal-lighter': '#a0f0ed',
   'teal-lightest': '#e8fffe',
 
-  'blue-darkest': '#05233b',
+  'blue-darkest': '#1C252C',
   'blue-darker': '#103d60',
   'blue-dark': '#2779bd',
   'blue': '#3490dc',
@@ -194,6 +194,7 @@ module.exports = {
 
   fonts: {
     'sans': [
+      'Hind Madurai',
       '-apple-system',
       'BlinkMacSystemFont',
       'Segoe UI',
