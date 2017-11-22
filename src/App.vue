@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="bg-indigo-darkest h-screen font-sans text-white">
     <header :class="$style.logo" class="pt-8 text-center tracking-tight">
-      LiftLog
+      Randominate
     </header>
     <main>
       <router-view></router-view>
