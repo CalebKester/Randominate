@@ -1,6 +1,6 @@
 <template lang="pug">
   #app(   
-    class="min-h-screen p-4 md:p-8 bg-blue-darkest font-sans text-grey tracking-wide uppercase"
+    class="min-h-screen p-4 md:p-8 bg-blue-darker font-sans text-grey tracking-wide uppercase"
   )
     header(class="text-center md:text-left")
       img(
@@ -9,12 +9,16 @@
         width="250"
       )
     main
-      hero-chooser
+      hero-chooser(
+        :heroes="filteredHeroes"
+        :total="heroes.length"
+      )
       .flex.flex-wrap.justify-center.mt-8
         attribute-filter(
-          v-for="filter in filters"
+          v-for="filter in filterOptions"
           :key="filter.property"
           :filter="filter" 
+          :activeFilters="filters"
           class="md:w-auto p-8"
         )
 </template>
@@ -34,7 +38,7 @@ export default {
     this.init();
   },
   computed: {
-    ...mapState(["filters"]),
+    ...mapState(["filters", "filterOptions", "heroes"]),
     ...mapGetters(["filteredHeroes"])
   },
   methods: {

@@ -1,63 +1,75 @@
+// https://desandro.github.io/3dtransforms/examples/carousel-02-dynamic.html
+// https://www.youtube.com/watch?v=8WLiOXfXF1w
+
 <template lang="pug">
   .mt-8
-    div(:class="$style.container")
+    div(
+      :class="$style.container"
+      :style="perspective"
+    )
+
+      div(
+        v-if="heroes.length === 0"
+        class="bg-blue-darkest flex items-center justify-center absolute pin text-5xl"
+      ) ?
       div(:class="$style.wrap" :style="carousel")
         div(
-          v-for="(hero, index) in list" 
+          v-for="(hero, index) in heroes" 
           :key="hero.id"
           :class="$style.hero"
+          class="bg-blue-darkest"
           :style="getTransform(index)"
         ) 
           img(
             :src="`/static/img/assets/${hero.name}.png`" 
-            xwidth="256"
-            xheight="144"
+            width="256"
+            height="144"
           )
     .text-center.mt-8
-      x-button(
-        @click="addHero(-1)"
-      ) -
       x-button(
         @click="rotate()"
         :class="$style.button"
       ) Spin
-      x-button(
-        @click="addHero(1)"
-      ) +
 </template>
 
 <script>
-import { mapState } from "vuex";
 import XButton from "./X-Button";
 
 export default {
   components: {
     XButton
   },
-  // props: {
-  //   list: {
-  //     type: Array,
-  //     required: true,
-  //     default: () => []
-  //   }
-  // },
+  props: {
+    heroes: {
+      type: Array,
+      default: () => []
+    },
+    total: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {
-      width: 208,
-      count: 7,
+      width: 276,
       current: 1
     };
   },
   computed: {
-    ...mapState(["heroes"]),
-    list() {
-      if (this.heroes) {
-        return this.heroes.slice(0, this.count);
-      }
-      return [];
-    },
     θ() {
       return 360 / this.count;
+    },
+    perspective() {
+      // Magic, I dunno what these numbers mean
+      // smaller numbers are good for lots of crap
+      // larger numbers are good for a few craps
+      // needless to say, I don't give a crap.
+      const ratio = 1 - this.count / 100;
+      const num = 1100 * ratio + 100;
+      return `perspective: ${num}px`;
+    },
+    count() {
+      return this.heroes.length;
     },
     radius() {
       return Math.round(this.width / 2 / Math.tan(Math.PI / this.count));
@@ -73,35 +85,27 @@ export default {
       // return `transform: rotateY(${angle}deg) translateZ(${this.radius}px)`;
       return `transform: rotateY(${angle}deg) translateZ(${this.radius}px)`;
     },
+    playAudio() {
+      const audio = new Audio("/static/spin.mp3");
+      audio.play();
+    },
     rotate() {
       const random = Math.round(Math.random() * (this.count - 1) + this.count);
       this.current = this.current + random;
-    },
-    addHero(count = 1) {
-      this.count = this.count + count;
     }
   }
 };
 </script>
-// https://www.youtube.com/watch?v=8WLiOXfXF1w
 
 <style module>
 .container {
-  width: 210px;
-  height: 140px;
+  width: 276px;
+  height: 144px;
   position: relative;
   margin: 0 auto 40px;
-  border: 1px solid #ccc;
   perspective: 1100px;
 }
 .wrap {
-  /* position: relative;
-  height: 144px;
-  width: 800px;
-  margin: 0 auto;
-  background: hsla(0, 0%, 0%, 0.2);
-  transform-style: preserve-3d; */
-
   width: 100%;
   height: 100%;
   position: absolute;
@@ -109,23 +113,13 @@ export default {
   transform-style: preserve-3d;
 }
 .hero {
+  /* backface-visibility: hidden; */
   display: block;
   position: absolute;
-  width: 186px;
-  height: 116px;
-  left: 10px;
-  top: 10px;
-  border: 2px solid black;
-  line-height: 116px;
-  font-size: 80px;
-  font-weight: bold;
-  color: white;
-  text-align: center;
-
-  img {
-    width: 186px;
-    height: 116px;
-  }
+  width: 256px;
+  height: 144px;
+  left: 0px;
+  top: 0px;
 }
 
 .button {
