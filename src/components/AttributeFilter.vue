@@ -1,8 +1,8 @@
 <template lang="pug">
   div
-    h2.mb-8.text-xs.uppercase {{filter.name}}
+    h2.mb-8.text-xs.uppercase.px-6 {{filter.name}}
     ul.list-reset
-      li(v-for="option in filter.options").mb-8
+      li(v-for="option in filter.options").mb-2
         filter-option(
           :option="option"
           @check="toggleFilter($event, option)"

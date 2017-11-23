@@ -1,15 +1,17 @@
 <template lang="pug">
-  label.uppercase
-    input(
-      type="checkbox"
-      @change="handleChange"
-      :checked="checked"
-    )
-    span {{option.name}}
+  x-button(
+    :color="color"
+    @click="handleChange"
+  ) {{option.name}}
 </template>
 
 <script>
+import XButton from "./X-Button";
+
 export default {
+  components: {
+    XButton
+  },
   model: {
     prop: "checked",
     event: "change"
@@ -25,6 +27,14 @@ export default {
     //   default: false
     // }
   },
+  computed: {
+    color() {
+      if (this.checked) {
+        return "text";
+      }
+      return "inactive";
+    }
+  },
   data() {
     return {
       checked: false
@@ -32,7 +42,6 @@ export default {
   },
   methods: {
     handleChange() {
-      // console.log("hit");
       this.checked = !this.checked;
       this.$emit("check", this.checked);
     }

@@ -90,6 +90,7 @@ export default {
       audio.play();
     },
     rotate() {
+      this.playAudio();
       const random = Math.round(Math.random() * (this.count - 1) + this.count);
       this.current = this.current + random;
     }
@@ -109,7 +110,7 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
-  transition: transform 1s;
+  transition: transform 6s;
   transform-style: preserve-3d;
 }
 .hero {

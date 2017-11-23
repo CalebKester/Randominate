@@ -72,4 +72,8 @@
   transition: all 0.2s ease-out;
 }
 
+.outline-none:focus {
+  outline: none;
+}
+
 @import "./input-range";

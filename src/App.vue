@@ -19,7 +19,7 @@
           :key="filter.property"
           :filter="filter" 
           :activeFilters="filters"
-          class="md:w-auto p-8"
+          class="md:w-auto"
         )
 </template>
 
